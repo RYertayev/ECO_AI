@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЭкоСорт AI — Сканирование отходов</title>
+<style>
+:root {
+  --green:#118f4a;
+  --green-dark:#0d743c;
+  --bg:#e9fff0;
+  --gray:#707070;
+  --border:#dce9df;
+}
+* {margin:0;padding:0;box-sizing:border-box;}
+body {
+  font-family:system-ui, sans-serif;
+  background:#fff;
+  color:#1d1d1d;
+}
+
+/* HEADER */
+header {
+  background:#009966;
+  padding:14px 32px;
+  color:#fff;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+header .logo {font-weight:700;font-size:20px;}
+header nav a {
+  color:#fff;
+  text-decoration:none;
+  margin:0 8px;
+  font-size:15px;
+  opacity:.9;
+}
+header nav a:hover {opacity:1;}
+
+/* HERO */
+.hero {
+  text-align:center;
+  padding:50px 20px 30px;
+}
+.hero h1 {
+  font-size:32px;
+  font-weight:800;
+}
+.hero p {
+  margin-top:6px;
+  font-size:16px;
+  color:var(--gray);
+}
+
+/* MAIN */
+/* container for uploader + result */
+.container {
+  display:flex;
+  gap:20px;
+  max-width:1100px;
+  margin:0 auto;
+  padding:10px 20px 40px;
+}
+.box {
+  flex:1;
+  background:var(--bg);
+  border-radius:14px;
+  border:1px solid var(--border);
+  padding:24px;
+  display:flex;
+  flex-direction:column;
+  min-height:250px;
+}
+.box h3 {
+  margin-bottom:14px;
+  font-size:18px;
+  font-weight:700;
+}
+.box button{
+    margin-top:14px;
+    padding:12px;
+    background:var(--green);
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    font-size:15px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+/* UPLOAD */
+.upload-area {
+  flex:1;
+  border:2px dashed var(--green);
+  border-radius:10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:var(--gray);
+  padding:20px;
+  cursor:pointer;
+}
+.upload-area:hover {
+  background:rgba(0,100,0,0.04);
+}
+.upload-area svg {
+  width:36px;
+  height:36px;
+  margin-bottom:8px;
+}
+
+/* RESULT */
+.result-area {
+  flex:1;
+  border:2px dashed var(--border);
+  border-radius:10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:var(--gray);
+  padding:20px;
+  overflow:hidden;
+}
+.result-area img {
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+  display:none;
+}
+
+/* CATEGORIES */
+.categories {
+  max-width:1100px;
+  margin:20px auto;
+  padding:0 20px 40px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.cat {
+  border-radius:10px;
+  padding:14px;
+  background:#EFF6FF;
+  border-left:6px solid var(--green);
+}
+.cat:nth-child(2){border-left-color:#1d7a43;}
+.cat:nth-child(3){border-left-color:#daaa3f;}
+.cat h4 {font-size:16px;margin-bottom:4px;}
+.cat p {font-size:14px;color:var(--gray);}
+
+/* FOOTER */
+footer {
+  background:#093821;
+  color:#cde9d6;
+  padding:40px 20px;
+}
+footer .cols {
+  display:flex;
+  gap:50px;
+  max-width:1000px;
+  margin:0 auto;
+}
+footer h5 {margin-bottom:8px;font-size:15px;}
+footer p, footer a {
+  font-size:14px;
+  text-decoration:none;
+  color:#cde9d6;
+}
+footer small {
+  display:block;
+  text-align:center;
+  margin-top:22px;
+  opacity:.6;
+  font-size:12px;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .container {flex-direction:column;}
+  .categories {grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">ЭкоСорт AI</div>
+  <nav>
+    <a href="/index">Главная</a>
+    <a href="/scan">Сканирование</a>
+    <a href="/map">Карта</a>
+    <a href="/project">О нас</a>
+    <a href="/contacts">Контакты</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Сканирование отходов</h1>
+  <p>Загрузите фотографию отходов, и наш AI определит тип и даст рекомендации</p>
+</section>
+
+<div class="container">
+
+  <!-- uploader -->
+  <div class="box">
+    <h3>Загрузите изображение</h3>
+    <label class="upload-area" for="file">
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17V3m0 0l-5 5m5-5l5 5M5 17h14v4H5z"/></svg>
+        <div>Нажмите для выбора файла<br>или перетащите изображение</div>
+        <div style="font-size:11px;margin-top:4px;color:var(--gray)">JPG, PNG, WEBP</div>
+        <form action="" id="form-image">
+        <input type="file" id="file" accept="image/*" style="display:none">
+        <button type="submit">Определить</button>
+        </form>
+      </div>
+    </label>
+    
+  </div>
+
+  <!-- result -->
+  <div class="box">
+    <h3>Результат анализа</h3>
+    <div class="result-area" id="result">
+      <img id="preview" alt="preview">
+      <div id="placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#adb5bd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19V5a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v14m22 0a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2m22 0H1m11-3a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
+        <div style="margin-top:8px;color:var(--gray)">Загрузите изображение</div>
+        <pre id="out-image"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="categories">
+  <div class="cat">
+    <h4>Пластик</h4>
+    <p>PET, HDPE бутылки, контейнеры</p>
+  </div>
+  <div class="cat">
+    <h4>Стекло</h4>
+    <p>Бутылки, банки из стекла</p>
+  </div>
+  <div class="cat">
+    <h4>Бумага</h4>
+    <p>Картон, газеты, журналы</p>
+  </div>
+</section>
+
+<footer>
+  <div class="cols">
+    <div>
+      <h5>ЭкоСорт AI</h5>
+      <p>Интеллектуальная платформа для сортировки отходов</p>
+    </div>
+    <div>
+      <h5>Навигация</h5>
+      <a href="#">Сканирование</a><br>
+      <a href="#">Карта пунктов</a><br>
+      <a href="#">Обучение</a>
+    </div>
+    <div>
+      <h5>Информация</h5>
+      <a href="#">О проекте</a><br>
+      <a href="#">Аналитика</a><br>
+      <a href="#">Контакты</a>
+    </div>
+  </div>
+  <small>© 2026 ЭкоСорт AI. Все права защищены.</small>
+</footer>
+
+<script>
+const fileInput = document.getElementById('file');
+const preview = document.getElementById('preview');
+const placeholder = document.getElementById('placeholder');
+
+fileInput.addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = 'block';
+  placeholder.style.display = 'none';
+});
+
+// ===== Загрузка фото и определение мусора =====
+document.getElementById("form-image").addEventListener("submit", e => {
+    e.preventDefault();
+    const fileInput = document.getElementById("file");
+    const out = document.getElementById("out-image");
+
+    if (!fileInput.files.length) { out.textContent = "❌ Файл не выбран"; return; }
+    out.textContent = "⏳ Определение...";
+
+    const data = new FormData();
+    data.append("image", fileInput.files[0]);
+
+    fetch("/predict", { method: "POST", body: data })
+    .then(r => r.json())
+    .then(data => {
+        if (data.error) { out.textContent = "❌ " + data.error; return; }
+        out.textContent = `Тип: ${data.type}\n${data.instruction}`;
+        if (map && userLocation) showRecyclePoints(data.type);
+    })
+    .catch(err => { out.textContent = "❌ Ошибка определения"; console.error(err); });
+});
+</script>
+
+</body>
+</html>

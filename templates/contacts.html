@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ЭкоСорт AI — Контакты</title>
+
+  <style>
+    :root{
+      --bg: #eaf7f2;
+      --surface: #ffffff;
+      --surface-2: #f6fbf9;
+      --text: #0f172a;
+      --muted: #64748b;
+
+      --brand: #0f8f72;
+      --brand-2: #0c7a61;
+      --brand-soft: rgba(15, 143, 114, 0.14);
+
+      --border: rgba(2, 8, 23, 0.08);
+      --shadow: 0 16px 40px rgba(2, 8, 23, 0.10);
+
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 12px;
+
+      --container: 1120px;
+      --gap: 22px;
+
+      --focus: 0 0 0 4px rgba(15, 143, 114, 0.18);
+      --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 50% 0%, rgba(15,143,114,.12), transparent 60%),
+        linear-gradient(180deg, #eafff7, var(--bg));
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    button, input, textarea{ font-family: inherit; }
+
+    header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 32px;
+  background:#009966;
+  border-bottom:1px solid #ddd;
+}
+nav a {
+  text-decoration:none;
+  color:#fff;
+  margin:0 10px;
+  font-size:15px;
+}
+.logo {
+  font-weight:700;
+  font-size:20px;
+  color:#fff;
+}
+    /* Page shell */
+    .container{
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 34px 18px 44px;
+    }
+
+    .hero{
+      text-align: center;
+      padding: 14px 0 18px;
+    }
+    .hero h1{
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.1;
+      letter-spacing: -0.4px;
+    }
+    .hero p{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Main grid */
+    .grid{
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: var(--gap);
+      align-items: start;
+      margin-top: 18px;
+    }
+
+    .card{
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+    .card--flat{
+      box-shadow: none;
+      background: rgba(255,255,255,.85);
+      backdrop-filter: blur(8px);
+    }
+    .card__pad{ padding: 22px; }
+    .card__title{
+      font-size: 18px;
+      margin: 0 0 14px;
+      letter-spacing: -0.2px;
+    }
+
+    /* Contact info list */
+    .infoList{ display: grid; gap: 14px; }
+    .infoItem{
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      padding: 14px 14px;
+      border-radius: 16px;
+      background: var(--surface-2);
+      border: 1px solid rgba(2,8,23,.06);
+    }
+    .iconBox{
+      width: 44px; height: 44px;
+      border-radius: 14px;
+      background: var(--brand-soft);
+      border: 1px solid rgba(15,143,114,.18);
+      display: grid;
+      place-items: center;
+      color: var(--brand);
+    }
+    .infoItem h4{
+      margin: 0;
+      font-size: 14px;
+      color: #0b1220;
+    }
+    .infoItem .value{
+      margin-top: 4px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .infoItem .hint{
+      margin-top: 4px;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    /* Hours card */
+    .hours{
+      background: linear-gradient(135deg, var(--brand), #0a6a56);
+      color: #fff;
+      border: 0;
+      box-shadow: var(--shadow);
+    }
+    .hours .card__title{ margin-bottom: 10px; }
+    .hoursList{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      opacity: .95;
+      font-size: 14px;
+    }
+
+    /* Tip card */
+    .tip{
+      background: #eef7ff;
+      border: 1px solid rgba(59,130,246,.18);
+      box-shadow: none;
+    }
+    .tip .tipRow{
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 10px;
+      align-items: start;
+      color: #0b1220;
+    }
+    .tip a{
+      color: #1d4ed8;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Form card */
+    .formGrid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .field{ display: grid; gap: 7px; }
+    label{
+      font-size: 13px;
+      color: #0b1220;
+      font-weight: 600;
+    }
+    .req{ color: #ef4444; margin-left: 4px; }
+    input, textarea{
+      border-radius: 12px;
+      border: 1px solid rgba(2,8,23,.12);
+      background: #fff;
+      padding: 12px 12px;
+      font-size: 14px;
+      outline: none;
+      transition: .15s ease;
+    }
+    textarea{ min-height: 140px; resize: vertical; }
+    input:focus, textarea:focus{
+      border-color: rgba(15,143,114,.55);
+      box-shadow: var(--focus);
+    }
+    .span-2{ grid-column: 1 / -1; }
+
+    .btn{
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .16s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      user-select: none;
+    }
+    .btn-primary{
+      background: var(--brand);
+      color: #fff;
+      box-shadow: 0 14px 30px rgba(15,143,114,.22);
+    }
+    .btn-primary:hover{ background: var(--brand-2); transform: translateY(-1px); }
+    .btn-primary:active{ transform: translateY(0); }
+
+    /* Quick action buttons */
+    .quick{
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .quickBtn{
+      background: rgba(255,255,255,.9);
+      border: 1px solid rgba(2,8,23,.10);
+      border-radius: 16px;
+      padding: 14px 14px;
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 12px;
+      align-items: center;
+      box-shadow: 0 10px 26px rgba(2,8,23,.08);
+      transition: .16s ease;
+      cursor: pointer;
+      text-align: left;
+    }
+    .quickBtn:hover{ transform: translateY(-1px); border-color: rgba(15,143,114,.28); }
+    .quickBtn .t{
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .quickBtn .s{
+      margin-top: 3px;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    /* Help section */
+    .helpWrap{
+      margin-top: 22px;
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(2,8,23,.10);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: 0 18px 36px rgba(2,8,23,.08);
+      backdrop-filter: blur(8px);
+    }
+    .helpTitle{
+      text-align: center;
+      font-size: 20px;
+      margin: 6px 0 16px;
+      letter-spacing: -0.2px;
+    }
+    .helpGrid{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .helpCard{
+      background: #fff;
+      border: 1px solid rgba(2,8,23,.10);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 10px 26px rgba(2,8,23,.08);
+      display: grid;
+      gap: 10px;
+      min-height: 128px;
+    }
+    .helpCard h3{
+      margin: 0;
+      font-size: 15px;
+      letter-spacing: -0.1px;
+    }
+    .helpCard p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    .helpCard .miniIcon{
+      width: 38px; height: 38px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(2,8,23,.08);
+      background: #f8fafc;
+    }
+
+    /* Footer */
+    footer{
+      margin-top: 26px;
+      background: #0a5a48;
+      color: rgba(255,255,255,.92);
+    }
+    .footerInner{
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 26px 18px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 20px;
+    }
+    .footerTitle{
+      font-weight: 800;
+      margin: 0 0 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .footerText{
+      margin: 0;
+      opacity: .86;
+      line-height: 1.5;
+      font-size: 13.5px;
+      max-width: 360px;
+    }
+    .footerCol h4{
+      margin: 0 0 10px;
+      font-size: 14px;
+      letter-spacing: -0.1px;
+    }
+    .footerLinks{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      font-size: 13.5px;
+      opacity: .9;
+    }
+    .footerLinks a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+
+    .copyright{
+      border-top: 1px solid rgba(255,255,255,.14);
+      text-align: center;
+      padding: 14px 18px;
+      font-size: 13px;
+      opacity: .85;
+    }
+
+    /* Toast */
+    .toast{
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 18px;
+      background: rgba(15,23,42,.95);
+      color: #fff;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 18px 36px rgba(0,0,0,.22);
+      display: none;
+      align-items: center;
+      gap: 10px;
+      max-width: min(560px, calc(100% - 24px));
+      z-index: 50;
+    }
+    .toast.show{ display: inline-flex; }
+    .toast .dot{
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34,197,94,.18);
+      flex: 0 0 auto;
+    }
+    .toast.error .dot{ background: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68,.18); }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+      .quick{ grid-template-columns: 1fr; }
+      .helpGrid{ grid-template-columns: 1fr; }
+      .footerInner{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px){
+      .nav{ display: none; } /* как на мобиле часто скрывают, можно заменить на бургер */
+      .formGrid{ grid-template-columns: 1fr; }
+      .span-2{ grid-column: auto; }
+    }
+  </style>
+</head>
+
+<body>
+ <header>
+  <div class="logo">ЭкоСорт AI</div>
+  <nav>
+    <a href="/index">Главная</a>
+    <a href="/scan">Сканирование</a>
+    <a href="/map">Карта</a>
+    <a href="/project">О нас</a>
+    <a href="/contacts">Контакты</a>
+  </nav>
+</header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <h1>Свяжитесь с нами</h1>
+      <p>
+        Мы всегда рады вашим вопросам, предложениям и обратной связи.<br/>
+        Помогите нам стать лучше!
+      </p>
+    </section>
+
+    <!-- MAIN GRID -->
+    <section class="grid" aria-label="Контакты и форма">
+      <!-- LEFT -->
+      <div class="leftCol">
+        <article class="card card--flat">
+          <div class="card__pad">
+            <h2 class="card__title">Контактная информация</h2>
+
+            <div class="infoList">
+              <div class="infoItem">
+                <div class="iconBox" aria-hidden="true">
+                  <!-- mail -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="2" />
+                    <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <h4>Email</h4>
+                  <div class="value">info@ecosort-ai.ru</div>
+                  <div class="hint">Ответим в течение 24 часов</div>
+                </div>
+              </div>
+
+              <div class="infoItem">
+                <div class="iconBox" aria-hidden="true">
+                  <!-- phone -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 3h3l2 5-2 2c1 3 3 5 6 6l2-2 5 2v3c0 1-1 2-2 2C11 21 3 13 3 5c0-1 1-2 2-2Z"
+                          stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <h4>Телефон</h4>
+                  <div class="value">+7 (495) 123-45-67</div>
+                  <div class="hint">Пн–Пт: 9:00–18:00</div>
+                </div>
+              </div>
+
+              <div class="infoItem">
+                <div class="iconBox" aria-hidden="true">
+                  <!-- map pin -->
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"
+                          stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M12 10.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"
+                          stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                </div>
+                <div>
+                  <h4>Адрес</h4>
+                  <div class="value">г. Москва, ул. Ленина, 45</div>
+                  <div class="hint">Главный офис</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <div style="height: 14px;"></div>
+
+        <article class="card hours">
+          <div class="card__pad">
+            <h2 class="card__title">Часы работы</h2>
+            <ul class="hoursList">
+              <li>Понедельник – Пятница: 9:00 – 18:00</li>
+              <li>Суббота: 10:00 – 16:00</li>
+              <li>Воскресенье: Выходной</li>
+            </ul>
+          </div>
+        </article>
+
+        <div style="height: 14px;"></div>
+
+        <article class="card tip">
+          <div class="card__pad">
+            <div class="tipRow">
+              <span aria-hidden="true">💡</span>
+              <div>
+                <strong>Совет</strong>
+                <div style="height: 6px"></div>
+                <span style="color: var(--muted); font-size: 13.5px; line-height: 1.45;">
+                  Перед тем как связаться с нами, посмотрите ответы на часто задаваемые вопросы
+                  в разделе <a href="#">FAQ</a>.
+                </span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="rightCol">
+        <article class="card card--flat">
+          <div class="card__pad">
+            <h2 class="card__title">Отправить сообщение</h2>
+
+            <form id="contactForm" novalidate>
+              <div class="formGrid" role="group" aria-label="Форма обратной связи">
+                <div class="field">
+                  <label for="name">Имя<span class="req">*</span></label>
+                  <input id="name" name="name" type="text" placeholder="Ваше имя" autocomplete="name" required />
+                </div>
+
+                <div class="field">
+                  <label for="email">Email<span class="req">*</span></label>
+                  <input id="email" name="email" type="email" placeholder="your@email.com" autocomplete="email" required />
+                </div>
+
+                <div class="field span-2">
+                  <label for="subject">Тема обращения<span class="req">*</span></label>
+                  <input id="subject" name="subject" type="text" placeholder="" required />
+                </div>
+
+                <div class="field span-2">
+                  <label for="message">Сообщение<span class="req">*</span></label>
+                  <textarea id="message" name="message" placeholder="Расскажите подробнее..." required></textarea>
+                </div>
+
+                <div class="span-2" style="margin-top: 6px;">
+                  <button class="btn btn-primary" type="submit">
+                    <!-- send icon -->
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M22 2 11 13" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M22 2 15 22l-4-9-9-4 20-7Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+                    </svg>
+                    Отправить сообщение
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </article>
+
+        <!-- QUICK ACTIONS -->
+        <div class="quick" aria-label="Быстрые действия">
+          <button class="quickBtn" type="button" data-fill="Общий вопрос">
+            <span class="iconBox" aria-hidden="true">
+              <!-- chat -->
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M21 12c0 4.4-4 8-9 8a10.5 10.5 0 0 1-4-.8L3 20l1.2-4A7.4 7.4 0 0 1 3 12c0-4.4 4-8 9-8s9 3.6 9 8Z"
+                      stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span>
+              <div class="t">Общий вопрос</div>
+            </span>
+          </button>
+
+          <button class="quickBtn" type="button" data-fill="Сообщить об ошибке">
+            <span class="iconBox" aria-hidden="true">
+              <!-- info -->
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 10v7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M12 7h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span>
+              <div class="t">Сообщить об ошибке</div>
+            </span>
+          </button>
+
+          <button class="quickBtn" type="button" data-fill="Предложить пункт переработки">
+            <span class="iconBox" aria-hidden="true">
+              <!-- location -->
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"
+                      stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M12 10.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"
+                      stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </span>
+            <span>
+              <div class="t">Предложить пункт переработки</div>
+            </span>
+          </button>
+
+          <button class="quickBtn" type="button" data-fill="Идея или улучшение">
+            <span class="iconBox" aria-hidden="true">
+              <!-- bulb -->
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M9 18h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M10 22h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8 14a7 7 0 1 1 8 0c-.8.6-1 1.5-1 2H9c0-.5-.2-1.4-1-2Z"
+                      stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span>
+              <div class="t">Идея или улучшение</div>
+            </span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- HELP SECTION -->
+    <section class="helpWrap" aria-label="Возможно, вам помогут">
+      <h2 class="helpTitle">Возможно, вам помогут</h2>
+
+      <div class="helpGrid">
+        <a class="helpCard" href="#">
+          <div class="miniIcon" aria-hidden="true">💬</div>
+          <h3>Часто задаваемые вопросы</h3>
+          <p>Ответы на популярные вопросы о переработке</p>
+        </a>
+
+        <a class="helpCard" href="#">
+          <div class="miniIcon" aria-hidden="true">📘</div>
+          <h3>Руководство пользователя</h3>
+          <p>Как использовать наш AI-сканер</p>
+        </a>
+
+        <a class="helpCard" href="#">
+          <div class="miniIcon" aria-hidden="true">❓</div>
+          <h3>О проекте</h3>
+          <p>Наша миссия и как мы работаем</p>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footerInner">
+      <div>
+        <div class="footerTitle">
+          <span class="brand__logo" style="background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.18)">
+            ♻️
+          </span>
+          ЭкоСорт AI
+        </div>
+        <p class="footerText">
+          Интеллектуальная платформа для сортировки и переработки отходов
+        </p>
+      </div>
+
+      <div class="footerCol">
+        <h4>Навигация</h4>
+        <ul class="footerLinks">
+          <li><a href="#">Сканирование</a></li>
+          <li><a href="#">Карта пунктов</a></li>
+          <li><a href="#">Обучение</a></li>
+        </ul>
+      </div>
+
+      <div class="footerCol">
+        <h4>Информация</h4>
+        <ul class="footerLinks">
+          <li><a href="#">О проекте</a></li>
+          <li><a href="#">Аналитика</a></li>
+          <li><a href="#">Контакты</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="copyright">© 2026 ЭкоСорт AI. Все права защищены.</div>
+  </footer>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite">
+    <span class="dot" aria-hidden="true"></span>
+    <span id="toastText">Готово</span>
+  </div>
+
+  <script>
+    // --- helpers ---
+    const toastEl = document.getElementById("toast");
+    const toastText = document.getElementById("toastText");
+    let toastTimer = null;
+
+    function showToast(message, type = "ok"){
+      toastText.textContent = message;
+      toastEl.classList.toggle("error", type === "error");
+      toastEl.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2600);
+    }
+
+    // Quick buttons fill subject
+    document.querySelectorAll(".quickBtn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const subject = btn.getAttribute("data-fill");
+        const subjectInput = document.getElementById("subject");
+        subjectInput.value = subject || "";
+        subjectInput.focus();
+        showToast("Тема заполнена: " + (subject || "—"));
+      });
+    });
+
+    // Form validation (демо)
+    const form = document.getElementById("contactForm");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name");
+      const email = document.getElementById("email");
+      const subject = document.getElementById("subject");
+      const message = document.getElementById("message");
+
+      const fields = [name, email, subject, message];
+      let ok = true;
+
+      fields.forEach(f => {
+        const empty = !String(f.value || "").trim();
+        f.style.borderColor = empty ? "rgba(239,68,68,.65)" : "rgba(2,8,23,.12)";
+        if (empty) ok = false;
+      });
+
+      // простая проверка email
+      const emailVal = String(email.value || "").trim();
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+      if (!emailOk){
+        email.style.borderColor = "rgba(239,68,68,.65)";
+        ok = false;
+      }
+
+      if (!ok){
+        showToast("Проверьте обязательные поля (и email).", "error");
+        return;
+      }
+
+      // Тут обычно отправка на сервер:
+      // fetch("/api/contact", { method:"POST", body: JSON.stringify({...}), headers:{ "Content-Type":"application/json" } })
+
+      showToast("Сообщение отправлено (демо). Спасибо!");
+      form.reset();
+    });
+  </script>
+</body>
+</html>
