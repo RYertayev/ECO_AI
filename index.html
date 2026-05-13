@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>ЭкоСорт AI — Интеллектуальная сортировка отходов</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        :root {
+            --green: #0aa06e;
+            --green-dark: #07835a;
+            --green-darker: #066a4a;
+            --green-light: #e9f7f1;
+            --text-dark: #1f2937;
+            --text-gray: #6b7280;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 25px rgba(0,0,0,0.06);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", system-ui, sans-serif;
+        }
+
+        body {
+            background: #f6faf8;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER (UPDATED NAV LIKE SCREENSHOT) ===== */
+        header{
+            background: var(--green);
+            color: #fff;
+        }
+
+        .topbar{
+            max-width: 1200px;
+            margin: auto;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+        }
+
+        /* brand */
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            min-width: 180px;
+        }
+        .brand .logo-icon{
+            width:36px;
+            height:36px;
+            border-radius:12px;
+            background: rgba(255,255,255,.14);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:18px;
+            line-height:1;
+        }
+        .brand .brand-text{
+            font-weight:800;
+            letter-spacing:.2px;
+            line-height:1.05;
+        }
+        .brand .brand-text span{
+            display:block;
+        }
+
+        /* links */
+        .nav-links{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:16px;
+            flex: 1;
+            flex-wrap: wrap;
+        }
+        .nav-links a{
+            color:#eafff6;
+            text-decoration:none;
+            font-size:14px;
+            font-weight:600;
+            opacity:.95;
+            padding:8px 10px;
+            border-radius:12px;
+            transition: background .15s ease, opacity .15s ease;
+            white-space:nowrap;
+        }
+        .nav-links a:hover{
+            background: rgba(255,255,255,.14);
+            opacity:1;
+        }
+
+        /* right buttons */
+        .nav-actions{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            min-width: 220px;
+            justify-content:flex-end;
+        }
+        .pill-btn{
+            border: none;
+            cursor:pointer;
+            font-weight:700;
+            font-size:14px;
+            padding:10px 16px;
+            border-radius:14px;
+            white-space:nowrap;
+            transition: filter .12s ease, transform .05s ease;
+        }
+        .pill-btn:active{ transform: scale(.99); }
+
+        .pill-login{
+            background: rgba(6,106,74,.40);
+            color:#fff;
+            border: 1px solid rgba(255,255,255,.18);
+        }
+        .pill-login:hover{ filter: brightness(.98); }
+
+        .pill-register{
+            background: #ffffff;
+            color: var(--green-darker);
+            border: 1px solid rgba(255,255,255,.18);
+        }
+        .pill-register:hover{ filter: brightness(.98); }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(#e9f7f1, #f6faf8);
+            padding: 80px 24px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            max-width: 720px;
+            margin: 0 auto 32px;
+            color: var(--text-gray);
+            font-size: 18px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 26px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: 2px solid var(--green);
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+        }
+
+        .btn-primary {
+            background: var(--green);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--green-dark);
+        }
+
+        .btn-outline {
+            background: #fff;
+            color: var(--green);
+        }
+
+        .btn-outline:hover {
+            background: var(--green-light);
+        }
+
+        /* ===== SECTION ===== */
+        section {
+            max-width: 1200px;
+            margin: auto;
+            padding: 80px 24px;
+        }
+
+        section h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 48px;
+        }
+
+        /* ===== CARDS ===== */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 28px;
+            box-shadow: var(--shadow);
+        }
+
+        .icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--green-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 16px;
+            color: var(--green);
+        }
+
+        .card h3 {
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .card p {
+            color: var(--text-gray);
+            font-size: 15px;
+        }
+
+        /* ===== GREEN BLOCK ===== */
+        .impact {
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            color: #fff;
+            border-radius: 24px;
+            padding: 64px 32px;
+            text-align: center;
+        }
+
+        .impact h2 {
+            margin-bottom: 16px;
+        }
+
+        .impact p {
+            max-width: 720px;
+            margin: 0 auto 48px;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+        }
+
+        .stat {
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .stat span {
+            display: block;
+            font-size: 14px;
+            font-weight: 400;
+            opacity: 0.85;
+            margin-top: 8px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #064e3b;
+            color: #d1fae5;
+            padding: 48px 24px 24px;
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        footer h4 {
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        footer a {
+            display: block;
+            color: #d1fae5;
+            text-decoration: none;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .copyright {
+            text-align: center;
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        /* ===== RESPONSIVE NAV ===== */
+        @media (max-width: 900px){
+            .topbar{gap:10px}
+            .brand{min-width:auto}
+            .nav-actions{min-width:auto}
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="topbar">
+        <div class="brand">
+            <div class="logo-icon">♻</div>
+            <div class="brand-text">
+                <span>Эко</span>
+                <span>Сорт AI</span>
+            </div>
+        </div>
+
+        <nav class="nav-links">
+            <a href="index.html">Главная</a>
+            <a href="Scan.html">Сканировать</a>
+            <a href="map.html">Карта</a>
+            <a href="studyind.html">Обучение</a>
+            <a href="about_project.html">О проекте</a>
+            <a href="contact_us.html">Контакты</a>
+        </nav>
+
+        <div class="nav-actions">
+            <button class="pill-btn pill-login" onclick="location.href='login.html'">Войти</button>
+            <button class="pill-btn pill-register" onclick="location.href='register.html'">Регистрация</button>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>Интеллектуальная сортировка<br>отходов</h1>
+    <p>
+        Используйте возможности искусственного интеллекта для правильной
+        классификации отходов, получайте инструкции по сортировке и находите
+        ближайшие пункты переработки
+    </p>
+    <div class="hero-buttons">
+        <a href="Scan.html" class="btn btn-primary">📷 Загрузить фото</a>
+        <a href="map.html" class="btn btn-outline">🗺 Найти пункты переработки</a>
+    </div>
+</section>
+
+<section>
+    <h2>Как это работает</h2>
+    <div class="grid">
+        <div class="card">
+            <div class="icon">📷</div>
+            <h3>1. Загрузите фото</h3>
+            <p>Сфотографируйте отходы или загрузите готовое изображение в систему</p>
+        </div>
+        <div class="card">
+            <div class="icon">♻</div>
+            <h3>2. AI-анализ</h3>
+            <p>Искусственный интеллект распознаёт тип отходов и классифицирует их</p>
+        </div>
+        <div class="card">
+            <div class="icon">🗺</div>
+            <h3>3. Инструкции и карта</h3>
+            <p>Получите рекомендации по сортировке и найдите ближайший пункт приёма</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Возможности платформы</h2>
+    <div class="grid">
+        <div class="card">
+            <div class="icon">📸</div>
+            <h3>Сканирование отходов</h3>
+            <p>Компьютерное зрение для автоматической классификации: пластик, стекло, бумага, металл и др.</p>
+        </div>
+        <div class="card">
+            <div class="icon">🗺</div>
+            <h3>Карта пунктов переработки</h3>
+            <p>Интерактивная карта с фильтрацией по типу отходов, адресам и часам работы</p>
+        </div>
+        <div class="card">
+            <div class="icon">📘</div>
+            <h3>Образовательные материалы</h3>
+            <p>Статьи, советы и FAQ по правильной сортировке отходов для всей семьи</p>
+        </div>
+        <div class="card">
+            <div class="icon">📊</div>
+            <h3>Аналитика и отчёты</h3>
+            <p>Статистика сканирований, популярных типов отходов и активности пунктов приёма</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="impact">
+        <h2>🍃 Вклад в охрану окружающей среды</h2>
+        <p>
+            Правильная сортировка отходов помогает снизить загрязнение,
+            сохранить ресурсы и уменьшить углеродный след
+        </p>
+        <div class="stats">
+            <div class="stat">80%<span>отходов можно переработать</span></div>
+            <div class="stat">50%<span>снижение выбросов CO₂</span></div>
+            <div class="stat">95%<span>экономия природных ресурсов</span></div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-grid">
+        <div>
+            <h4>♻ ЭкоСорт AI</h4>
+            <p style="font-size:14px">
+                Интеллектуальная платформа для сортировки и переработки отходов
+            </p>
+        </div>
+        <div>
+            <h4>Навигация</h4>
+            <a href="Scan.html">Сканирование</a>
+            <a href="map.html">Карта пунктов</a>
+            <a href="studyind.html">Обучение</a>
+        </div>
+        <div>
+            <h4>Информация</h4>
+            <a href="about_project.html">О проекте</a>
+            <a href="contact_us.html">Контакты</a>
+        </div>
+    </div>
+    <div class="copyright">
+        © 2026 ЭкоСорт AI. Все права защищены.
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Карта пунктов переработки — ЭкоСорт AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+  <style>
+    :root {
+      --green: #0aa06e;
+      --green-dark: #066a4a;
+      --green-darker:#066a4a;
+      --green-soft: #e9f7f1;
+      --bg: #f5fbf8;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --shadow: 0 14px 32px rgba(0,0,0,.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(#e9f7f1, #f9fdfb);
+      color: var(--text);
+    }
+
+    /* ===== UPDATED NAVIGATION ===== */
+    header{
+      background: var(--green);
+      color:#fff;
+    }
+
+    .topbar{
+      max-width:1200px;
+      margin:auto;
+      padding:12px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:170px;
+    }
+
+    .logo-icon{
+      width:36px;
+      height:36px;
+      border-radius:12px;
+      background:rgba(255,255,255,.14);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+    }
+
+    .brand-text{
+      font-weight:800;
+      line-height:1.05;
+    }
+    .brand-text span{display:block;}
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:16px;
+      flex:1;
+      flex-wrap:wrap;
+    }
+
+    .nav-links a{
+      color:#eafff6;
+      text-decoration:none;
+      font-size:14px;
+      font-weight:600;
+      padding:8px 10px;
+      border-radius:12px;
+      transition:.15s;
+      white-space:nowrap;
+    }
+
+    .nav-links a:hover{
+      background:rgba(255,255,255,.14);
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:220px;
+      justify-content:flex-end;
+    }
+
+    .pill-btn{
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+      font-size:14px;
+      padding:10px 16px;
+      border-radius:14px;
+      transition:.15s;
+      white-space:nowrap;
+    }
+
+    .pill-login{
+      background:rgba(6,106,74,.4);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.2);
+    }
+
+    .pill-register{
+      background:#ffffff;
+      color:var(--green-darker);
+      border:1px solid rgba(255,255,255,.2);
+    }
+
+    .pill-btn:hover{ filter:brightness(.98); }
+
+    /* ===== MAIN ===== */
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 72px 24px 100px;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 17px;
+      margin-bottom: 28px;
+    }
+
+    /* ===== FILTER ===== */
+    .filter {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px 24px;
+      margin-bottom: 32px;
+    }
+
+    .filter-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: #f1f5f9;
+      font-size: 14px;
+      color: #374151;
+      cursor: pointer;
+      user-select: none;
+      transition: transform .05s ease;
+    }
+
+    .chip:active { transform: scale(0.98); }
+
+    .chip.active {
+      background: var(--green);
+      color: #fff;
+    }
+
+    /* ===== MAP + LIST ===== */
+    .content {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+
+    /* MAP */
+    .map {
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      min-height: 480px;
+      background: #e5e7eb;
+    }
+    #map { width: 100%; height: 480px; }
+
+    /* LIST */
+    .list h2 {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .point {
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: transform .06s ease;
+    }
+
+    .point:active { transform: scale(0.99); }
+
+    .point-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .distance {
+      background: #d1fae5;
+      color: #065f46;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .address {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #f1f5f9;
+    }
+
+    .tag.plastic { background:#eff6ff; color:#1d4ed8; }
+    .tag.glass { background:#ecfdf5; color:#047857; }
+    .tag.paper { background:#fffbeb; color:#92400e; }
+    .tag.metal { background:#f3f4f6; color:#374151; }
+    .tag.battery { background:#fee2e2; color:#991b1b; }
+    .tag.electronics { background:#ede9fe; color:#5b21b6; }
+
+    .info {
+      font-size: 14px;
+      color: #374151;
+      margin-bottom: 12px;
+    }
+
+    .btn {
+      width: 100%;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: filter .1s ease;
+    }
+
+    .btn:hover { filter: brightness(0.98); }
+
+    /* ===== INFO BLOCK ===== */
+    .tips {
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      border-radius: 22px;
+      padding: 36px;
+      color: #eafff6;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 24px;
+    }
+
+    .tip h3 {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .tip p {
+      font-size: 14px;
+      opacity: .9;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--green-dark);
+      color: #d1fae5;
+      padding: 56px 24px 24px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+
+    footer h4 {
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    footer a {
+      display: block;
+      color: #d1fae5;
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .copy {
+      text-align: center;
+      font-size: 13px;
+      opacity: .8;
+    }
+
+    /* ===== ADAPTIVE ===== */
+    @media (max-width: 900px) {
+      .content, .tips { grid-template-columns: 1fr; }
+      #map { height: 420px; }
+      .topbar{gap:10px}
+      .brand{min-width:auto}
+      .nav-actions{min-width:auto}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo-icon">♻</div>
+      <div class="brand-text">
+        <span>Эко</span>
+        <span>Сорт AI</span>
+      </div>
+    </div>
+
+    <nav class="nav-links">
+      <a href="index.html">Главная</a>
+      <a href="Scan.html">Сканировать</a>
+      <a href="map.html">Карта</a>
+      <a href="studyind.html">Обучение</a>
+      <a href="about_project.html">О проекте</a>
+      <a href="contact_us.html">Контакты</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="pill-btn pill-login" onclick="location.href='login.html'">Войти</button>
+      <button class="pill-btn pill-register" onclick="location.href='register.html'">Регистрация</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <h1>Карта пунктов переработки</h1>
+  <div class="subtitle">Найдите ближайший пункт приёма отходов на переработку</div>
+
+  <div class="filter">
+    <div class="filter-title">🔽 Фильтр по типу отходов</div>
+    <div class="chips">
+      <div class="chip active">Все</div>
+      <div class="chip">пластик</div>
+      <div class="chip">стекло</div>
+      <div class="chip">бумага</div>
+      <div class="chip">металл</div>
+      <div class="chip">батарейки</div>
+      <div class="chip">электроника</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div id="map" class="map"></div>
+
+    <div class="list">
+      <h2>Найдено пунктов: 0</h2>
+      <!-- точки будут рендериться JS-ом -->
+    </div>
+  </div>
+
+  <div class="tips">
+    <div class="tip">
+      <h3>Подготовка отходов</h3>
+      <p>Промойте и высушите материалы перед сдачей</p>
+    </div>
+    <div class="tip">
+      <h3>Часы работы</h3>
+      <p>Уточните часы работы по телефону перед посещением</p>
+    </div>
+    <div class="tip">
+      <h3>Виды отходов</h3>
+      <p>Каждый пункт принимает определённые типы материалов</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <h4>♻ ЭкоСорт AI</h4>
+      <p style="font-size:14px">
+        Интеллектуальная платформа для сортировки и переработки отходов
+      </p>
+    </div>
+    <div>
+      <h4>Навигация</h4>
+      <a href="Scan.html">Сканирование</a>
+      <a href="map.html">Карта пунктов</a>
+      <a href="studyind.html">Обучение</a>
+    </div>
+    <div>
+      <h4>Информация</h4>
+      <a href="about_project.html">О проекте</a>
+      <a href="contact_us.html">Контакты</a>
+    </div>
+  </div>
+  <div class="copy">© 2026 ЭкоСорт AI. Все права защищены.</div>
+</footer>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+  // =========================
+  // ДАННЫЕ ПУНКТОВ (пример)
+  // =========================
+  const points = [
+    {
+      id: 1,
+      name: 'ЭкоЦентр "Green City"',
+      address: "пр. Кабанбай батыра, 11",
+      phone: "+7 (7172) 000-001",
+      hours: "Пн–Пт: 9:00–18:00",
+      tags: ["пластик", "бумага", "металл"],
+      lat: 51.1282,
+      lng: 71.4304
+    },
+    {
+      id: 2,
+      name: "Пункт переработки EXPO",
+      address: "район EXPO, ул. Туркестан",
+      phone: "+7 (7172) 000-002",
+      hours: "Ежедневно: 10:00–20:00",
+      tags: ["пластик", "стекло"],
+      lat: 51.0909,
+      lng: 71.4180
+    },
+    {
+      id: 3,
+      name: "ЭкоПункт Сарыарка",
+      address: "пр. Сарыарка, 15",
+      phone: "+7 (7172) 000-003",
+      hours: "Пн–Сб: 9:00–19:00",
+      tags: ["бумага", "металл"],
+      lat: 51.1655,
+      lng: 71.4145
+    },
+    {
+      id: 4,
+      name: "Glass Recycling Astana",
+      address: "ул. Абая, 22",
+      phone: "+7 (7172) 000-004",
+      hours: "Пн–Пт: 10:00–18:00",
+      tags: ["стекло"],
+      lat: 51.1565,
+      lng: 71.4703
+    },
+    {
+      id: 5,
+      name: "Battery Collection Point",
+      address: "ТРЦ Хан Шатыр",
+      phone: "+7 (7172) 000-005",
+      hours: "Ежедневно: 10:00–22:00",
+      tags: ["батарейки", "электроника"],
+      lat: 51.1320,
+      lng: 71.4036
+    }
+  ];
+
+  // =========================
+  // УТИЛИТЫ
+  // =========================
+  function distanceKm(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a =
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+  }
+
+  function tagToClass(tag) {
+    if (tag === "пластик") return "plastic";
+    if (tag === "стекло") return "glass";
+    if (tag === "бумага") return "paper";
+    if (tag === "металл") return "metal";
+    if (tag === "батарейки") return "battery";
+    if (tag === "электроника") return "electronics";
+    return "";
+  }
+
+  // =========================
+  // DOM
+  // =========================
+  const chips = Array.from(document.querySelectorAll(".chip"));
+  const listEl = document.querySelector(".list");
+  const countEl = listEl.querySelector("h2");
+
+  let activeFilter = "Все";
+  let userPos = null;
+
+  // =========================
+  // MAP INIT
+  // =========================
+  const map = L.map("map", { zoomControl: true }).setView([51.1694, 71.4491], 13);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap"
+  }).addTo(map);
+
+  // =========================
+  // MARKERS
+  // =========================
+  let userMarker = null;
+  const pointMarkers = new Map();
+
+  function openRouteTo(point) {
+    const dest = `${point.lat},${point.lng}`;
+    if (userPos) {
+      const origin = `${userPos.lat},${userPos.lng}`;
+      window.open(
+        `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}&travelmode=walking`,
+        "_blank"
+      );
+    } else {
+      window.open(`https://www.google.com/maps/search/?api=1&query=${dest}`, "_blank");
+    }
+  }
+
+  function renderList(filtered) {
+    Array.from(listEl.querySelectorAll(".point")).forEach(el => el.remove());
+    countEl.textContent = `Найдено пунктов: ${filtered.length}`;
+
+    filtered.forEach(p => {
+      const km = userPos ? distanceKm(userPos.lat, userPos.lng, p.lat, p.lng) : null;
+      const distText = km ? `${km.toFixed(1)} км` : "— км";
+
+      const pointDiv = document.createElement("div");
+      pointDiv.className = "point";
+      pointDiv.innerHTML = `
+        <div class="point-header">
+          <strong>${p.name}</strong>
+          <span class="distance">${distText}</span>
+        </div>
+        <div class="address">📍 ${p.address}</div>
+        <div class="tags">
+          ${p.tags.map(t => `<span class="tag ${tagToClass(t)}">${t}</span>`).join("")}
+        </div>
+        <div class="info">🕒 ${p.hours}</div>
+        <div class="info">📞 ${p.phone}</div>
+        <button class="btn">📍 Построить маршрут</button>
+      `;
+
+      pointDiv.querySelector(".btn").addEventListener("click", (e) => {
+        e.stopPropagation();
+        openRouteTo(p);
+      });
+
+      pointDiv.addEventListener("click", () => {
+        map.setView([p.lat, p.lng], 15);
+        const m = pointMarkers.get(p.id);
+        if (m) m.openPopup();
+      });
+
+      listEl.appendChild(pointDiv);
+    });
+  }
+
+  function applyFilterAndRender() {
+    const filtered = (activeFilter === "Все")
+      ? [...points]
+      : points.filter(p => p.tags.includes(activeFilter));
+
+    if (userPos) {
+      filtered.sort((a,b) =>
+        distanceKm(userPos.lat, userPos.lng, a.lat, a.lng) -
+        distanceKm(userPos.lat, userPos.lng, b.lat, b.lng)
+      );
+    }
+
+    points.forEach(p => {
+      const m = pointMarkers.get(p.id);
+      if (!m) return;
+      const show = (activeFilter === "Все") || p.tags.includes(activeFilter);
+      if (show) m.addTo(map); else map.removeLayer(m);
+    });
+
+    renderList(filtered);
+  }
+
+  points.forEach(p => {
+    const marker = L.marker([p.lat, p.lng]);
+
+    marker.bindPopup(`
+      <b>${p.name}</b><br/>
+      ${p.address}<br/>
+      <small>${p.tags.join(", ")}</small><br/>
+      <button id="route-${p.id}" style="margin-top:8px;padding:6px 10px;border:none;border-radius:10px;background:#0aa06e;color:#fff;cursor:pointer;">
+        Маршрут
+      </button>
+    `);
+
+    marker.on("popupopen", () => {
+      const btn = document.getElementById(`route-${p.id}`);
+      if (btn) btn.onclick = () => openRouteTo(p);
+    });
+
+    marker.addTo(map);
+    pointMarkers.set(p.id, marker);
+  });
+
+  chips.forEach(ch => {
+    ch.addEventListener("click", () => {
+      chips.forEach(x => x.classList.remove("active"));
+      ch.classList.add("active");
+      activeFilter = ch.textContent.trim();
+      applyFilterAndRender();
+    });
+  });
+
+  function onUserLocation(lat, lng) {
+    userPos = { lat, lng };
+
+    if (!userMarker) {
+      userMarker = L.circleMarker([lat, lng], { radius: 8 })
+        .addTo(map)
+        .bindPopup("Вы здесь");
+    } else {
+      userMarker.setLatLng([lat, lng]);
+    }
+
+    map.setView([lat, lng], 14);
+    applyFilterAndRender();
+  }
+
+  function geoError(err) {
+    console.warn("Geolocation error:", err);
+    applyFilterAndRender();
+    alert("Не удалось получить геопозицию. Важно: геолокация работает только на HTTPS или localhost. Проверьте разрешения браузера.");
+  }
+
+  applyFilterAndRender();
+
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => onUserLocation(pos.coords.latitude, pos.coords.longitude),
+      geoError,
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
+    );
+  } else {
+    alert("Геолокация не поддерживается в этом браузере.");
+  }
+</script>
+
+</body>
+</html> 
