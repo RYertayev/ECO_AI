@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Обучение — ЭкоСорт AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root{
+  --green:#0aa06e;
+  --green-dark:#0a5c44;
+  --green-darker:#066a4a;
+  --bg:#eefaf4;
+  --card:#ffffff;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --shadow:0 14px 32px rgba(0,0,0,.18);
+}
+*{box-sizing:border-box;font-family:Inter,Segoe UI,Arial,sans-serif}
+body{margin:0;background:var(--bg);color:#111827}
+
+/* ===== UPDATED NAVIGATION ===== */
+header{
+  background:var(--green);
+  color:#fff;
+}
+
+.topbar{
+  max-width:1150px;
+  margin:auto;
+  padding:12px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:170px;
+}
+
+.logo-icon{
+  width:36px;
+  height:36px;
+  border-radius:12px;
+  background:rgba(255,255,255,.14);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+}
+
+.brand-text{
+  font-weight:800;
+  line-height:1.05;
+}
+.brand-text span{display:block;}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  flex:1;
+  flex-wrap:wrap;
+}
+
+.nav-links a{
+  color:#eafff6;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:600;
+  padding:8px 10px;
+  border-radius:12px;
+  transition:.15s;
+  white-space:nowrap;
+}
+.nav-links a:hover{
+  background:rgba(255,255,255,.14);
+}
+
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:220px;
+  justify-content:flex-end;
+}
+
+.pill-btn{
+  border:none;
+  cursor:pointer;
+  font-weight:700;
+  font-size:14px;
+  padding:10px 16px;
+  border-radius:14px;
+  transition:.15s;
+  white-space:nowrap;
+}
+.pill-login{
+  background:rgba(6,106,74,.4);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.2);
+}
+.pill-register{
+  background:#ffffff;
+  color:var(--green-darker);
+  border:1px solid rgba(255,255,255,.2);
+}
+.pill-btn:hover{filter:brightness(.98)}
+
+/* MAIN */
+main{max-width:1150px;margin:40px auto;padding:0 20px}
+h1{text-align:center;margin-bottom:6px}
+.subtitle{
+  text-align:center;
+  color:var(--muted);
+  margin-bottom:40px;
+  font-size:14px;
+}
+
+/* CARDS */
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:22px;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+.card h3{margin-top:0}
+
+/* HERO */
+.hero{
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:30px;
+  margin-bottom:40px;
+}
+.hero ul{
+  padding-left:18px;
+  color:#374151;
+  font-size:14px;
+}
+.hero button{margin-top:14px}
+
+/* BUTTON */
+button{
+  background:var(--green);
+  color:#fff;
+  border:none;
+  padding:12px 18px;
+  border-radius:10px;
+  font-size:15px;
+  cursor:pointer;
+}
+button:hover{background:#089a66}
+
+/* COURSES */
+.courses{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+  margin-bottom:50px;
+}
+.badge{
+  display:inline-block;
+  background:#e7f7ef;
+  color:var(--green);
+  font-size:12px;
+  padding:4px 10px;
+  border-radius:20px;
+  margin-bottom:10px;
+}
+
+/* STEPS */
+.steps{
+  background:#eafff6;
+  border-radius:18px;
+  padding:30px;
+  margin-bottom:50px;
+}
+.steps-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+}
+.step{
+  background:#fff;
+  border-radius:14px;
+  padding:18px;
+  text-align:center;
+}
+.step div{
+  font-size:28px;
+  margin-bottom:10px;
+  color:var(--green);
+}
+
+/* CTA */
+.cta{
+  background:var(--green);
+  color:#fff;
+  border-radius:20px;
+  padding:36px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  margin-bottom:60px;
+}
+.cta p{margin:6px 0 0;color:#eafff6}
+
+/* FOOTER */
+footer{
+  background:var(--green-dark);
+  color:#d1fae5;
+  padding:40px;
+}
+.footer-grid{
+  max-width:1150px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px;
+}
+footer a{
+  color:#a7f3d0;
+  text-decoration:none;
+  display:block;
+  margin-bottom:6px;
+  font-size:13px;
+}
+.copy{
+  text-align:center;
+  margin-top:30px;
+  font-size:12px;
+  opacity:.7;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero,.courses,.steps-grid,.cta{grid-template-columns:1fr}
+  main{margin:28px auto}
+  .topbar{gap:10px}
+  .brand{min-width:auto}
+  .nav-actions{min-width:auto}
+}
+
+/* =========================
+   MODAL (POPUP) STYLES
+   ========================= */
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modal-overlay.open{display:flex}
+
+.modal{
+  width:min(920px, 100%);
+  background:#fff;
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  position:relative;
+}
+
+.modal-header{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+
+.modal-title{
+  font-weight:700;
+}
+
+.icon-btn{
+  border:none;
+  background:#f3f4f6;
+  color:#111827;
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:18px;
+}
+.icon-btn:hover{filter:brightness(.98)}
+
+.modal-body{
+  padding:16px;
+}
+
+.slide{
+  display:none;
+  gap:16px;
+}
+.slide.active{display:grid}
+
+.slide.two-col{
+  grid-template-columns:1.2fr 1fr;
+}
+@media(max-width:900px){
+  .slide.two-col{grid-template-columns:1fr}
+}
+
+.video-box{
+  background:#0b3b2d;
+  border-radius:16px;
+  overflow:hidden;
+  aspect-ratio:16/9;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.video-box video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  background:#000;
+}
+
+.slide-side{
+  background:#f8fafc;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px;
+}
+.slide-side h3{margin:0 0 8px}
+.slide-side p{margin:0 0 10px;color:#374151;font-size:14px;line-height:1.55}
+.slide-side ul{margin:0;padding-left:18px;color:#374151;font-size:14px;line-height:1.6}
+
+.modal-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:14px 16px;
+  border-top:1px solid var(--border);
+  background:#fff;
+}
+
+.progress{
+  font-size:13px;
+  color:var(--muted);
+}
+
+.nav-btn{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.secondary{
+  background:#f3f4f6;
+  color:#111827;
+}
+.secondary:hover{filter:brightness(.98)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo-icon">♻</div>
+      <div class="brand-text">
+        <span>Эко</span>
+        <span>Сорт AI</span>
+      </div>
+    </div>
+
+    <nav class="nav-links">
+      <a href="index.html">Главная</a>
+      <a href="Scan.html">Сканировать</a>
+      <a href="map.html">Карта</a>
+      <a href="studyind.html">Обучение</a>
+      <a href="about_project.html">О проекте</a>
+      <a href="contact_us.html">Контакты</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="pill-btn pill-login" onclick="location.href='login.html'">Войти</button>
+      <button class="pill-btn pill-register" onclick="location.href='register.html'">Регистрация</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<h1>Обучение</h1>
+<p class="subtitle">
+Научитесь правильно сортировать отходы и помогать планете каждый день
+</p>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="card">
+    <h3>Почему это важно?</h3>
+    <ul>
+      <li>До 60% отходов можно переработать</li>
+      <li>Неправильная сортировка вредит экологии</li>
+      <li>Обучение занимает всего несколько минут</li>
+    </ul>
+    <button id="startLearningBtn">🚀 Начать обучение</button>
+  </div>
+
+  <div class="card">
+    <h3>Что вы узнаете</h3>
+    <ul>
+      <li>Как отличать типы мусора</li>
+      <li>Что можно и нельзя перерабатывать</li>
+      <li>Как пользоваться AI-сканером</li>
+      <li>Где сдавать отходы рядом с вами</li>
+    </ul>
+  </div>
+</div>
+
+<!-- COURSES -->
+<h2>Обучающие модули</h2>
+<div class="courses">
+  <div class="card">
+    <span class="badge">Базовый</span>
+    <h3>Основы сортировки</h3>
+    <p>Узнайте базовые категории отходов и ошибки новичков</p>
+  </div>
+
+  <div class="card">
+    <span class="badge">AI</span>
+    <h3>Работа с AI-сканером</h3>
+    <p>Как правильно сканировать предметы и понимать результат</p>
+  </div>
+
+  <div class="card">
+    <span class="badge">Практика</span>
+    <h3>Реальные примеры</h3>
+    <p>Разбор упаковок, пластика, стекла и электроники</p>
+  </div>
+</div>
+
+<!-- STEPS -->
+<div class="steps">
+  <h2>Как проходит обучение</h2>
+  <div class="steps-grid">
+    <div class="step">
+      <div>📘</div>
+      Изучаете материал
+    </div>
+    <div class="step">
+      <div>📷</div>
+      Сканируете предмет
+    </div>
+    <div class="step">
+      <div>🤖</div>
+      AI даёт подсказку
+    </div>
+    <div class="step">
+      <div>♻</div>
+      Сдаёте правильно
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <div>
+    <h2>Готовы начать?</h2>
+    <p>Пройдите обучение и начните сортировать отходы осознанно</p>
+  </div>
+  <button id="startNowBtn">Начать сейчас</button>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <b>ЭкоСорт AI</b><br><br>
+      Интеллектуальная платформа<br>
+      для сортировки отходов
+    </div>
+    <div>
+      <b>Навигация</b><br><br>
+      <a href="Scan.html">Сканирование</a>
+      <a href="studyind.html">Обучение</a>
+      <a href="map.html">Карта пунктов</a>
+    </div>
+    <div>
+      <b>Информация</b><br><br>
+      <a href="about_project.html">О проекте</a>
+      <a href="contact_us.html">Контакты</a>
+    </div>
+  </div>
+  <div class="copy">© 2026 ЭкоСорт AI. Все права защищены.</div>
+</footer>
+
+<!-- =========================
+     MODAL (POPUP)
+     ========================= -->
+<div class="modal-overlay" id="learnModalOverlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="learnModalTitle">
+    <div class="modal-header">
+      <div class="modal-title" id="learnModalTitle">Обучение: шаг 1 из 2</div>
+      <button class="icon-btn" id="closeModalBtn" aria-label="Закрыть">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <!-- SLIDE 1: VIDEO -->
+      <div class="slide two-col active" data-slide="1">
+        <div class="video-box">
+          <video id="learnVideo" controls playsinline>
+            <source src="видеообучение по переработке.mp4" type="video/mp4">
+            Ваш браузер не поддерживает видео.
+          </video>
+        </div>
+        <div class="slide-side">
+          <h3>♻ Как происходит переработка</h3>
+          <p>
+            Короткое видео объясняет, что происходит после того, как вы сдали мусор:
+            сортировка, очистка, переработка и выпуск новых материалов.
+          </p>
+          <ul>
+            <li>Промойте и высушите упаковку</li>
+            <li>Снимайте крышки и сжимайте бутылки</li>
+            <li>Не смешивайте грязные отходы с чистыми</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SLIDE 2: SCAN INSTRUCTIONS -->
+      <div class="slide two-col" data-slide="2">
+        <div class="slide-side" style="background:#fff">
+          <h3>📷 Как правильно сканировать</h3>
+          <p>Чтобы AI распознал мусор точнее, следуйте этим правилам:</p>
+          <ul>
+            <li><b>Хорошее освещение</b> — не снимайте в темноте</li>
+            <li><b>Один предмет</b> — уберите лишнее из кадра</li>
+            <li><b>Держите ровно</b> — без сильного наклона</li>
+            <li><b>Заполните кадр</b> — предмет должен быть крупно</li>
+          </ul>
+          <p style="margin-top:10px">
+            После сканирования приложение покажет: <b>тип отхода</b>, <b>контейнер</b> и
+            <b>подготовку</b> (помыть/сжать/снять крышку).
+          </p>
+        </div>
+
+        <div class="slide-side">
+          <h3>🤖 Как читать результат</h3>
+          <p>
+            AI выдаёт тип материала и “уверенность”.
+            Если уверенность низкая — сделайте фото ещё раз.
+          </p>
+          <ul>
+            <li><b>Пластик</b>: ополоснуть, снять крышку, сжать</li>
+            <li><b>Бумага</b>: сухая, без жира и еды</li>
+            <li><b>Металл</b>: промыть банку, можно сплющить</li>
+            <li><b>Стекло</b>: ополоснуть, сдавать отдельно</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="progress" id="progressText">Шаг 1 / 2</div>
+      <div class="nav-btn">
+        <button class="secondary" id="prevBtn">← Назад</button>
+        <button id="nextBtn">Вперёд →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // =========================
+  // MODAL + SLIDES LOGIC
+  // =========================
+  const overlay = document.getElementById("learnModalOverlay");
+  const startLearningBtn = document.getElementById("startLearningBtn");
+  const startNowBtn = document.getElementById("startNowBtn");
+  const closeModalBtn = document.getElementById("closeModalBtn");
+  const modalTitle = document.getElementById("learnModalTitle");
+  const progressText = document.getElementById("progressText");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const slides = Array.from(document.querySelectorAll(".slide"));
+  const video = document.getElementById("learnVideo");
+
+  let current = 1;
+  const total = slides.length;
+
+  function openModal() {
+    overlay.classList.add("open");
+    overlay.setAttribute("aria-hidden", "false");
+    current = 1;
+    showSlide(current);
+    try { video.currentTime = 0; } catch(e){}
+  }
+
+  function closeModal() {
+    overlay.classList.remove("open");
+    overlay.setAttribute("aria-hidden", "true");
+    try { video.pause(); } catch(e){}
+  }
+
+  function showSlide(index) {
+    current = Math.max(1, Math.min(total, index));
+    slides.forEach(s => s.classList.remove("active"));
+    const active = slides.find(s => Number(s.dataset.slide) === current);
+    if (active) active.classList.add("active");
+
+    modalTitle.textContent = `Обучение: шаг ${current} из ${total}`;
+    progressText.textContent = `Шаг ${current} / ${total}`;
+
+    prevBtn.style.visibility = current === 1 ? "hidden" : "visible";
+    nextBtn.textContent = current === total ? "Готово ✓" : "Вперёд →";
+
+    if (current !== 1) {
+      try { video.pause(); } catch(e){}
+    }
+  }
+
+  function next() {
+    if (current < total) showSlide(current + 1);
+    else closeModal();
+  }
+
+  function prev() {
+    if (current > 1) showSlide(current - 1);
+  }
+
+  startLearningBtn.addEventListener("click", openModal);
+  startNowBtn.addEventListener("click", openModal);
+
+  nextBtn.addEventListener("click", next);
+  prevBtn.addEventListener("click", prev);
+  closeModalBtn.addEventListener("click", closeModal);
+
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) closeModal();
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && overlay.classList.contains("open")) closeModal();
+    if (e.key === "ArrowRight" && overlay.classList.contains("open")) next();
+    if (e.key === "ArrowLeft" && overlay.classList.contains("open")) prev();
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>О проекте — ЭкоСорт AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+  --green: #009B77;
+  --green-dark: #007a5f;
+  --green-darker:#066a4a;
+  --mint: #e9f7f2;
+  --bg: #f6fbf9;
+  --text: #1f2f2b;
+  --gray: #dfe8e4;
+  --purple: linear-gradient(135deg,#5f5cff,#7b6dff);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: Inter, Arial, sans-serif; }
+body { background: var(--bg); color: var(--text); }
+
+/* ===== NAVIGATION ===== */
+header{
+  background: var(--green);
+  color:#fff;
+}
+
+.topbar{
+  max-width:1200px;
+  margin:auto;
+  padding:12px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:170px;
+}
+
+.logo-icon{
+  width:36px;
+  height:36px;
+  border-radius:12px;
+  background:rgba(255,255,255,.14);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+}
+
+.brand-text{
+  font-weight:800;
+  line-height:1.05;
+}
+.brand-text span{ display:block; }
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  flex:1;
+  flex-wrap:wrap;
+}
+
+.nav-links a{
+  color:#eafff6;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:600;
+  padding:8px 10px;
+  border-radius:12px;
+  transition:.15s;
+  white-space:nowrap;
+}
+
+.nav-links a:hover{
+  background:rgba(255,255,255,.14);
+}
+
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:220px;
+  justify-content:flex-end;
+}
+
+.pill-btn{
+  border:none;
+  cursor:pointer;
+  font-weight:700;
+  font-size:14px;
+  padding:10px 16px;
+  border-radius:14px;
+  transition:.15s;
+}
+
+.pill-login{
+  background:rgba(6,106,74,.4);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.2);
+}
+
+.pill-register{
+  background:#ffffff;
+  color:var(--green-darker);
+  border:1px solid rgba(255,255,255,.2);
+}
+
+.pill-btn:hover{
+  filter:brightness(.98);
+}
+
+/* ===== PAGE STYLES ===== */
+.wrapper { max-width: 1050px; margin: auto; padding: 40px 20px; }
+
+h1 { font-size: 28px; margin-bottom: 8px; }
+.subtitle { color: #4a6a61; margin-bottom: 28px; }
+
+.mission {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.m-card {
+  padding: 24px;
+  border-radius: 16px;
+  color: white;
+}
+.green { background: var(--green); }
+.purple { background: var(--purple); }
+
+.section { margin-top: 48px; }
+.section h2 { margin-bottom: 20px; font-size: 22px; }
+
+.tech {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+}
+.tech-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0,0,0,.05);
+  font-size: 14px;
+}
+
+.impact {
+  background: var(--mint);
+  padding: 24px;
+  border-radius: 16px;
+}
+.impact ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+.impact li { list-style: none; }
+
+.timeline {
+  position: relative;
+  margin-top: 30px;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #cde7de;
+}
+.step {
+  width: 45%;
+  background: white;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0,0,0,.05);
+  margin-bottom: 30px;
+}
+.left { margin-right: auto; }
+.right { margin-left: auto; }
+
+.team {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 20px;
+}
+.member {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  text-align: center;
+}
+.avatar {
+  width: 64px;
+  height: 64px;
+  background: var(--green);
+  border-radius: 50%;
+  margin: auto auto 10px;
+}
+
+.partners {
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  gap: 12px;
+}
+.partner {
+  height: 40px;
+  background: #e5ece9;
+  border-radius: 8px;
+}
+
+.cta {
+  background: var(--green);
+  color: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+}
+.white { 
+  background: white; 
+  color: var(--green);
+  padding:10px 18px;
+  border-radius:10px;
+  text-decoration:none;
+}
+.outline {
+  border: 1px solid white;
+  color: white;
+  padding:10px 18px;
+  border-radius:10px;
+  text-decoration:none;
+  margin-left:10px;
+}
+
+footer {
+  background: #0d5f4b;
+  color: #cfe8e0;
+  padding: 30px;
+  font-size: 13px;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo-icon">♻</div>
+      <div class="brand-text">
+        <span>ЭкоС</span>
+        <span>орт AI</span>
+      </div>
+    </div>
+
+    <nav class="nav-links">
+      <a href="index.html">Главная</a>
+      <a href="Scan.html">Сканировать</a>
+      <a href="map.html">Карта</a>
+      <a href="studyind.html">Обучение</a>
+      <a href="about_project.html">О проекте</a>
+      <a href="contact_us.html">Контакты</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="pill-btn pill-login" onclick="location.href='login.html'">
+        Войти
+      </button>
+      <button class="pill-btn pill-register" onclick="location.href='register.html'">
+        Регистрация
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="wrapper">
+  <h1>О проекте ЭкоСорт AI</h1>
+  <p class="subtitle">Мы используем искусственный интеллект для оптимизации управления отходами и экологического образования</p>
+
+  <div class="mission">
+    <div class="m-card green">
+      <h3>Наша миссия</h3>
+      <p>Сделать правильную сортировку отходов доступной каждому</p>
+    </div>
+    <div class="m-card purple">
+      <h3>Наше видение</h3>
+      <p>Мир, где технологии помогают экологии</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Технологии и подход</h2>
+    <div class="tech">
+      <div class="tech-card">AI технологии<br>Компьютерное зрение</div>
+      <div class="tech-card">Большие данные<br>Аналитика отходов</div>
+      <div class="tech-card">Сообщество<br>Образование и участие</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Наше влияние</h2>
+    <div class="impact">
+      <ul>
+        <li>♻ Снижение загрязнения</li>
+        <li>🌍 Экологическое образование</li>
+        <li>📊 Анализ переработки</li>
+        <li>🤝 Социальная ответственность</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Наш путь</h2>
+    <div class="timeline">
+      <div class="step left"><b>2024</b><br>Разработка концепции</div>
+      <div class="step right"><b>2025</b><br>Полноценный запуск</div>
+      <div class="step left"><b>2026</b><br>Масштабирование</div>
+      <div class="step right"><b>2027</b><br>Глобальная платформа</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Команда проекта</h2>
+    <div class="team">
+      <div class="member"><div class="avatar"></div>Шауенова Дария</div>
+      <div class="member"><div class="avatar"></div>Долгов Владислав</div>
+      <div class="member"><div class="avatar"></div>Жуніс Разия</div>
+      <div class="member"><div class="avatar"></div>Антай Ерасыл</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Партнёры и поддержка</h2>
+    <div class="partners">
+      <div class="partner"></div><div class="partner"></div>
+      <div class="partner"></div><div class="partner"></div>
+      <div class="partner"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="cta">
+      <h2>Присоединяйтесь к нашей миссии</h2>
+      <a class="white" href="Scan.html">Начать использовать</a>
+      <a class="outline" href="contact_us.html">Связаться с нами</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2026 ЭкоСорт AI. Все права защищены.
+</footer>
+
+</body>
+</html>
