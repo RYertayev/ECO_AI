@@ -460,7 +460,7 @@ scanBtn.addEventListener("click", async () => {
     formData.append("image", selectedFile);
 
     try {
-        const res = await fetch("http://127.0.0.1:5000/analyze", {
+        const res = await fetch("https://eco-ai-2.onrender.com/analyze", {
             method: "POST",
             body: formData
         });
